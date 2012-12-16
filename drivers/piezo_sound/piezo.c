@@ -1,26 +1,26 @@
-/*   Project assignment: Hardware problem
- *  Read in an 8 bit port value (DIP switch ) and output a musical note for each corresponding bit ie B0 -> middle C,
- *  B1 -> C#, B2 -> D, etc...If more than one bit is set, chose the lowest note frequency for output and keep the
- *  synthesizer monophonic.
+/**
  *
  */
- 
+
+// Useful librairies
 #include <avr/io.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
 #include <util/delay.h>
+// Unused librairy for the moment, TODO -> remove it
 #include "LCD.h"
- 
+
+
+// Ports declarations
 #define BUZZER_PORT PORTA
 #define BUZZER_DDR  DDRA
 #define BUZZER_PIN  0
+
+
+//global variable used to play music
+int switch_input;
  
  
-int switch_input;               //global variable
- 
- 
-void BUZZ(float period)
+// buzz plays a note while the switch_input is unchanged
+void buzz(float period)
 {
     int new_input;
     float half_period;         
@@ -43,8 +43,51 @@ void BUZZ(float period)
     return;
 }
  
+
+// Provide the duration and period of buzzer signal in ms
+void buzz_2(float duration, float period)
+{
+    long int i,cycles;
+    float half_period;  // Initialize variables
  
-int main(void)
+    cycles=duration/period; // Compute the number of cycles to loop toggling the pin
+    half_period = period/2; // Compute a half cycle period
+
+    //The Data Direction Register (DDR) tells each corresponding pin whether it's in or out.
+    //That line of code is configuring a pin to be output. 
+    BUZZER_DDR = (1 << BUZZER_PIN) | BUZZER_DDR;  // Set the port for the buzzer output
+ 
+    for (i=0;i<cycles;i++)   // Toggle the speaker the appropriate number of cycles
+    {
+        _delay_ms(half_period);                         // Wait a half cycle to toggle port pin
+        BUZZER_PORT = (1 << BUZZER_PIN) | BUZZER_PORT;    // Set the port pin
+        _delay_ms(half_period);                         // Wait a half cycle to clear the port pin
+        BUZZER_PORT = ~(1 << BUZZER_PIN) & BUZZER_PORT;   // Clear the port pin
+    }
+ 
+    return;     // Return to the main program
+}
+
+
+// Implementation of a 'bip'
+void bip(void)
+{
+    int i;
+ 
+    for (i=0; i<4; i=i+1)
+    {
+      // TODO -> remove this line if not really useful      
+      PORTA = 0b00000010 ^ PORTA;     // Toggle the LED pin by XOR (whenever a bit is XORed with 1, it is toggled)
+      
+      buzz_2(75,0.5);                   // Output a waveform of 75ms at 2KHz (period of 2KHz is 1/2000=0.5 ms)
+      _delay_ms(75);                  // Wait for 75 ms
+    }
+    return;
+}
+
+
+// Play the sounds via thanks to the switch input
+int sound_player(void)
 {  
     DDRD = 0x00;                //PORTD is all input for DIP switch
     DDRA = 0x01;                //PORTA pin 0 is an output for buzzer  
@@ -70,35 +113,35 @@ int main(void)
 LOOP:   switch(switch_input)        //determines which DIP switch is turned ON to play a
         {                           //specific note
             case 0x0:
-                BUZZ((1/C)*100);    //Branches to function BUZZ with period of C ((1/261.63)*100 = 3.822 ms)
+                buzz((1/C)*100);    //Branches to function buzz with period of C ((1/261.63)*100 = 3.822 ms)
                 break;
  
             case 0x1:
-                BUZZ((1/C2)*100);
+                buzz((1/C2)*100);
                 break;
  
             case 0x2:
-                BUZZ((1/D)*100);
+                buzz((1/D)*100);
                 break;
  
             case 0x3:
-                BUZZ((1/D2)*100);
+                buzz((1/D2)*100);
                 break;
  
             case 0x4:
-                BUZZ((1/E)*100);
+                buzz((1/E)*100);
                 break;
  
             case 0x5:
-                BUZZ((1/F)*100);
+                buzz((1/F)*100);
                 break;
  
             case 0x6:
-                BUZZ((1/F2)*100);
+                buzz((1/F2)*100);
                 break;
  
             case 0x7:
-                BUZZ((1/G)*100);
+                buzz((1/G)*100);
                 break;
      
             default:                        //Default case is for if more than one switch is on
@@ -119,4 +162,10 @@ LOOP:   switch(switch_input)        //determines which DIP switch is turned ON t
                 goto LOOP;
         }
     }  
+}
+
+
+// Fake main to compile
+int main(){
+  return 1;
 }
