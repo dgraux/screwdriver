@@ -1,12 +1,26 @@
 /**
- *
+ * @brief This file gives functions to manage sound with piezoelectrical speaker
+ * @file piezo.c
+ * @author Damien GRAUX
+ * @date 16 december 2012
+ * @note Read in an 8 bit port value (DIP switch ) and output
+ * @note a musical note for each corresponding bit ie B0 -> middle C,
+ * @note B1 -> C#, B2 -> D, etc...If more than one bit is set,
+ * @note chose the lowest note frequency for output and keep
+ * @note the synthesizer monophonic.
  */
+
 
 // Useful librairies
 #include <avr/io.h>
 #include <util/delay.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+
 // Unused librairy for the moment, TODO -> remove it
-#include "LCD.h"
+//#include "LCD.h"
 
 
 // Ports declarations
@@ -15,11 +29,16 @@
 #define BUZZER_PIN  0
 
 
-//global variable used to play music
+/**
+ * @brief global variable used to play music
+ */
 int switch_input;
  
- 
-// buzz plays a note while the switch_input is unchanged
+/**
+ * @brief buzz plays a note while the switch_input is unchanged
+ * @param[in] float period of the note with is bounded to be payed
+ * @note Uses the @swith_input to know the moment to stop playing
+ */
 void buzz(float period)
 {
     int new_input;
@@ -44,7 +63,11 @@ void buzz(float period)
 }
  
 
-// Provide the duration and period of buzzer signal in ms
+/**
+ * @brief  Provide the duration and period of buzzer signal in ms
+ * @param[in] float duration of the note with is bounded to be payed
+ * @param[in] float period of the note with is bounded to be payed
+ */
 void buzz_2(float duration, float period)
 {
     long int i,cycles;
@@ -69,7 +92,9 @@ void buzz_2(float duration, float period)
 }
 
 
-// Implementation of a 'bip'
+/**
+ * @brief Implementation of a 'bip'
+ */
 void bip(void)
 {
     int i;
@@ -86,8 +111,11 @@ void bip(void)
 }
 
 
-// Play the sounds via thanks to the switch input
-int sound_player(void)
+/**
+ * @brief Play the sounds via thanks to the switch input
+ * @note Uses the @swith_input to know the moment to stop playing
+ */
+void sound_player(void)
 {  
     DDRD = 0x00;                //PORTD is all input for DIP switch
     DDRA = 0x01;                //PORTA pin 0 is an output for buzzer  
