@@ -19,13 +19,18 @@
 #include <math.h>
 
 
-// Unused librairy for the moment, TODO -> remove it
-//#include "LCD.h"
 
-
-// Ports declarations
+/**
+ * @brief Ports declarations
+ */
 #define BUZZER_PORT PORTA
+/**
+ * @brief Ports declarations
+ */
 #define BUZZER_DDR  DDRA
+/**
+ * @brief Ports declarations
+ */
 #define BUZZER_PIN  0
 
 
@@ -33,6 +38,7 @@
  * @brief global variable used to play music
  */
 int switch_input;
+
  
 /**
  * @brief buzz plays a note while the switch_input is unchanged
@@ -193,7 +199,10 @@ LOOP:   switch(switch_input)        //determines which DIP switch is turned ON t
 }
 
 
-// Fake main to compile
+/**
+ * @brief The main just launches the sound_player
+ */
 int main(){
+  sound_player();
   return 1;
 }
