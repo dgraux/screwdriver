@@ -1,0 +1,18 @@
+Here are the points that we want to solve...
+
+Finishing the vga driver
+Extending the audio driver to others devices (jack...)
+Merging the audio and video drivers on one µC
+
+Finishing the typon for the motherboard
+Creating the typon for the controlers
+
+Creating the games
+- pong
+- racer
+
+Hosting properly the documentation on the dropbox (?)
+Writing a nice header for the documentation pages
+
+Starting the users notices
+Adding pretty images in notices

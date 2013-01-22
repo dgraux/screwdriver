@@ -658,6 +658,3 @@ static void avr_init(void)
 
   return;
 }
-    
-	
-    
