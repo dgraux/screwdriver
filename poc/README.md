@@ -1,23 +1,22 @@
-SCREWDRIVER
-===========
+POC [SCREWDRIVER]
+=================
 
->The 8-bits game console created from scratch!!
+>POC is the first sub-project.
 
 Introduction
 ------------
 
-Screwdriver is a simple project of building a game console from scratch
+POC stands for Proof Of Concept...
+In fact, this part used to be a try to make a console from zero. Actually, it is not integrated.
 
 Description
 -----------
 
-Threre are then 3 parts in this project :  
+Threre are then 2 parts in this project :  
 The hardware part : decribes the tools used and the components selected  
-The softwares part : programs of the games which are implemented on the microcontrollers  
 The drivers' part : code lines which allowed the communication between the harware and the softwares
 
-Moreover, two aditional directories have been added :  
-The notices that explain how to play and plug the console correctly  
+Moreover, an aditional directory has been added :  
 A directory of demonstrations and images  
 
 Documentation
@@ -31,7 +30,7 @@ To contribute
 -------------
 
 After cloning the project from github.com/dgraux/screwdriver.git  
-Adjust your workplace with configure  
+Configure your workplace   
 You are ready to help
 
 Contacts

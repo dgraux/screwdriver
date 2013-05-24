@@ -6,33 +6,19 @@ SCREWDRIVER
 Introduction
 ------------
 
-Screwdriver is a simple project of building a game console from scratch
+Screwdriver is a simple project of building a game console from scratch and for fun by using the AVR environment.
 
 Description
 -----------
 
-Threre are then 3 parts in this project :  
-The hardware part : decribes the tools used and the components selected  
-The softwares part : programs of the games which are implemented on the microcontrollers  
-The drivers' part : code lines which allowed the communication between the harware and the softwares
+There are two main directories in this repository:
+1. poc: which is in fact the first version of the screwdriver, there are only some drivers and the harware part in.
+2. reloaded: whic is the version we are currently working on.
 
-Moreover, two aditional directories have been added :  
-The notices that explain how to play and plug the console correctly  
-A directory of demonstrations and images  
+Licence
+-------
 
-Documentation
--------------
-
-To generate the documentation :  
-make doc  
-Then launch documentation/doc.html  
-
-To contribute
--------------
-
-After cloning the project from github.com/dgraux/screwdriver.git  
-Adjust your workplace with configure  
-You are ready to help
+This whole project is under the PostCardWare licence detailed in LICENCE
 
 Contacts
 --------
